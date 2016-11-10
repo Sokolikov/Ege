@@ -11,7 +11,6 @@ void main(void)
 
 	//Определение количества цифр в числе
 	for(i = 1, numbers_size = 0; (number / i) != 0; i *= 10, numbers_size++){}
-		printf("%d\n", numbers_size);
 
 	//Разбиваем число на цифры и заносим их в массив
 	for(i = 0; i < numbers_size; i++)
