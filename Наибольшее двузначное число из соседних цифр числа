@@ -6,7 +6,6 @@ void main(void)
 	int numbers_size;					//Количество цифр в числе
 	long int number;					//Вводимое число
 	int i;
-	puts("Enter number(without any '0'):");
 	scanf("%d", &number);
 
 	//Определение количества цифр в числе
