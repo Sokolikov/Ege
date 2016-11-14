@@ -1,0 +1,90 @@
+#include <stdlib.h>
+
+void main(void)
+{
+	char * numbers_array;				  //Массив цифр числа
+	char numbers_array_1[10];			//Массив соседних цифр наибольшей цифры
+	int numbers_size;					    //Количество цифр в числе
+	unsigned long int number;			//Вводимое число
+	int i;
+	int i_1;
+	int max_1 = 0; 
+	int max_2 = 0; 
+	int index;
+	
+	scanf("%d", &number);
+
+	//Определение количества цифр в числе
+	for(i = 1, numbers_size = 0; (number / i) != 0; i *= 10, numbers_size++){}
+
+	//Создаём массив из number_size значений
+	numbers_array = (char *) malloc(numbers_size * sizeof(char));
+
+	//Разбиваем число на цифры и заносим цифры в массив
+	for(i = 0; i < numbers_size; i++)
+	{
+		numbers_array[i] = number % 10;
+		number /= 10;
+	}
+
+	//Находим наибольшую цифру
+	for(i = 0; i < numbers_size; i++)
+	{
+		if(numbers_array[i] >= max_1)
+			max_1 = numbers_array[i];
+	}
+
+	//Находим количество соседних чисел
+	for(index = 0, i = 0; i < numbers_size; i++)
+	{
+		if(numbers_array[i] == max_1 && (i != 0 && i != numbers_size - 1))
+		{
+			index += 2;
+		}
+		else if(numbers_array[i] == max_1 && numbers_array[i] == numbers_array[0])
+		{
+			index++;
+		}
+		else if(numbers_array[i] == max_1 && numbers_array[i] == numbers_array[numbers_size- 1])
+		{
+			index++;
+		}
+	}
+
+	//Если наибольших цифр несколько, то запоминаем их соседние цифры
+	for(i = 0, i_1 = 0; i < numbers_size; i++)
+	{
+		//Если найдена наибольшая цифра, запоминаем её соседние цифры
+		if(numbers_array[i] == max_1)
+		{
+			if(i != (numbers_size - 1) && i != 0)
+			{
+				numbers_array_1[i_1] = numbers_array[i + 1];
+				i_1++;
+				numbers_array_1[i_1] = numbers_array[i - 1];
+				i_1++;
+			}
+			else if(i == 0)
+			{
+				numbers_array_1[i_1] = numbers_array[i + 1];
+				i_1++;
+			}
+			else if(i == numbers_size - 1)
+			{
+				numbers_array_1[i_1] = numbers_array[i - 1];
+				i_1++;
+			}
+		}
+	}
+
+	//Находим наибольшее соседнее число
+	for(i = 0; i < index; i++)
+	{
+		if(numbers_array_1[i] > max_2)
+			max_2 = numbers_array_1[i];
+	}
+
+	//Вывод числа
+	printf("%d%d\n", max_1, max_2);
+	return;
+}
